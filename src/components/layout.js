@@ -7,7 +7,7 @@ class Template extends React.Component {
   render() {
     const { location, children } = this.props
     const isRootPath = location.pathname === `${__PATH_PREFIX__}/`
-    const isPaginatedPath = !!location.pathname.split('/')[1].match(/^[0-9]+$/)
+    const isPaginatedPath = !!location.pathname.split('/').pop().match(/^[0-9]+$/)
     let header
 
     if (isRootPath || isPaginatedPath) {
