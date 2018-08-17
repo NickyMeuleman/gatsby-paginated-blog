@@ -6,10 +6,11 @@ import { rhythm, scale } from '../utils/typography'
 class Template extends React.Component {
   render() {
     const { location, children } = this.props
-    const rootPath = `${__PATH_PREFIX__}/`
+    const isRootPath = location.pathname === `${__PATH_PREFIX__}/`
+    const isPaginatedPath = !!location.pathname.split('/')[1].match(/^[0-9]+$/)
     let header
 
-    if (location.pathname === rootPath) {
+    if (isRootPath || isPaginatedPath) {
       header = (
         <h1
           style={{
