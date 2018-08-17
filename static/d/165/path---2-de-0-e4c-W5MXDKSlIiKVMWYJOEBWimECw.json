@@ -1,0 +1,1 @@
+{"errors":[{"message":"Variable \"$skip\" is never used in operation \"blogPageQuery\".","locations":[{"line":2,"column":3}]},{"message":"Variable \"$limit\" is never used in operation \"blogPageQuery\".","locations":[{"line":3,"column":3}]}],"pageContext":{"limit":2,"skip":2,"numPages":2,"currentPage":2}}
