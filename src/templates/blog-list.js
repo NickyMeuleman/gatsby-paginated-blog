@@ -42,6 +42,7 @@ class BlogIndex extends React.Component {
             </div>
           )
         })}
+        <pre>{JSON.stringify(this.props.pageContext, null, 2)}</pre>
       </Layout>
     )
   }
