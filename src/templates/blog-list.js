@@ -15,6 +15,11 @@ class BlogIndex extends React.Component {
       'props.data.site.siteMetadata.description'
     )
     const posts = get(this, 'props.data.allMarkdownRemark.edges')
+    const { currentPage, numPages } = this.props.pageContext
+    const isFirst = currentPage === 1
+    const isLast = currentPage === numPages
+    const prevPage = currentPage - 1 === 1 ? "/" : (currentPage - 1).toString()
+    const nextPage = (currentPage + 1).toString()
 
     return (
       <Layout location={this.props.location}>
@@ -42,7 +47,14 @@ class BlogIndex extends React.Component {
             </div>
           )
         })}
-        <pre>{JSON.stringify(this.props.pageContext, null, 2)}</pre>
+        {
+          !isFirst &&
+          <Link to={prevPage} rel="prev">← Previous Page</Link>
+        }
+        {
+          !isLast &&
+          <Link to={nextPage} rel="next">Next Page →</Link>
+        }
       </Layout>
     )
   }
