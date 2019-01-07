@@ -1,36 +1,31 @@
 import React from 'react'
 import { Link, graphql } from 'gatsby'
-import get from 'lodash/get'
-import Helmet from 'react-helmet'
 
+import SEO from '../components/seo'
 import Bio from '../components/Bio'
 import Layout from '../components/layout'
 import { rhythm } from '../utils/typography'
 
 class BlogIndex extends React.Component {
   render() {
-    const siteTitle = get(this, 'props.data.site.siteMetadata.title')
-    const siteDescription = get(
-      this,
-      'props.data.site.siteMetadata.description'
-    )
-    const posts = get(this, 'props.data.allMarkdownRemark.edges')
+    const { data } = this.props
+    const siteTitle = data.site.siteMetadata.title
+    const posts = data.allMarkdownRemark.edges
     const { currentPage, numPages } = this.props.pageContext
     const isFirst = currentPage === 1
     const isLast = currentPage === numPages
-    const prevPage = currentPage - 1 === 1 ? "/" : (currentPage - 1).toString()
+    const prevPage = currentPage - 1 === 1 ? '/' : (currentPage - 1).toString()
     const nextPage = (currentPage + 1).toString()
 
     return (
-      <Layout location={this.props.location}>
-        <Helmet
-          htmlAttributes={{ lang: 'en' }}
-          meta={[{ name: 'description', content: siteDescription }]}
+      <Layout location={this.props.location} title={siteTitle}>
+        <SEO
           title={siteTitle}
+          keywords={[`blog`, `gatsby`, `javascript`, `react`]}
         />
         <Bio />
         {posts.map(({ node }) => {
-          const title = get(node, 'frontmatter.title') || node.fields.slug
+          const title = node.frontmatter.title || node.fields.slug
           return (
             <div key={node.fields.slug}>
               <h3
@@ -57,36 +52,36 @@ class BlogIndex extends React.Component {
             padding: 0,
           }}
         >
-        {
-          !isFirst &&
-          <Link to={prevPage} rel="prev">← Previous Page</Link>
-        }
-        {
-          Array.from({ length: numPages }, (_, i) => (
+          {!isFirst && (
+            <Link to={prevPage} rel="prev">
+              ← Previous Page
+            </Link>
+          )}
+          {Array.from({ length: numPages }, (_, i) => (
             <li
-             key={`pagination-number${i + 1}`}
-             style={{
-               margin: 0,
-             }}
+              key={`pagination-number${i + 1}`}
+              style={{
+                margin: 0,
+              }}
             >
-              <Link 
+              <Link
                 to={`/${i === 0 ? '' : i + 1}`}
                 style={{
                   padding: rhythm(1 / 4),
                   textDecoration: 'none',
-                  color: i + 1 === currentPage ? '#ffffff' : '', 
-                  background: i + 1 === currentPage ? '#007acc' : ''
+                  color: i + 1 === currentPage ? '#ffffff' : '',
+                  background: i + 1 === currentPage ? '#007acc' : '',
                 }}
               >
                 {i + 1}
               </Link>
             </li>
-          ))
-        }
-        {
-          !isLast &&
-          <Link to={nextPage} rel="next">Next Page →</Link>
-        }
+          ))}
+          {!isLast && (
+            <Link to={nextPage} rel="next">
+              Next Page →
+            </Link>
+          )}
         </ul>
       </Layout>
     )
@@ -100,10 +95,13 @@ export const pageQuery = graphql`
     site {
       siteMetadata {
         title
-        description
       }
     }
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }, limit: $limit, skip: $skip) {
+    allMarkdownRemark(
+      sort: { fields: [frontmatter___date], order: DESC }
+      limit: $limit
+      skip: $skip
+    ) {
       edges {
         node {
           excerpt
