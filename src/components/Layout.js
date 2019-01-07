@@ -3,9 +3,9 @@ import { Link } from 'gatsby'
 
 import { rhythm, scale } from '../utils/typography'
 
-class Template extends React.Component {
+class Layout extends React.Component {
   render() {
-    const { location, children } = this.props
+    const { location, title, children } = this.props
     const isRootPath = location.pathname === `${__PATH_PREFIX__}/`
     const pageNumber = location.pathname
       .split('/')
@@ -13,6 +13,7 @@ class Template extends React.Component {
       .pop()
     const isPaginatedPath = pageNumber && Boolean(pageNumber.match(/^[0-9]+$/))
     let header
+
     if (isRootPath || isPaginatedPath) {
       header = (
         <h1
@@ -24,13 +25,13 @@ class Template extends React.Component {
         >
           <Link
             style={{
-              boxShadow: 'none',
-              textDecoration: 'none',
-              color: 'inherit',
+              boxShadow: `none`,
+              textDecoration: `none`,
+              color: `inherit`,
             }}
-            to={'/'}
+            to={`/`}
           >
-            Gatsby Starter Blog
+            {title}
           </Link>
         </h1>
       )
@@ -38,20 +39,19 @@ class Template extends React.Component {
       header = (
         <h3
           style={{
-            fontFamily: 'Montserrat, sans-serif',
+            fontFamily: `Montserrat, sans-serif`,
             marginTop: 0,
-            marginBottom: rhythm(-1),
           }}
         >
           <Link
             style={{
-              boxShadow: 'none',
-              textDecoration: 'none',
-              color: 'inherit',
+              boxShadow: `none`,
+              textDecoration: `none`,
+              color: `inherit`,
             }}
-            to={'/'}
+            to={`/`}
           >
-            Gatsby Starter Blog
+            {title}
           </Link>
         </h3>
       )
@@ -59,17 +59,22 @@ class Template extends React.Component {
     return (
       <div
         style={{
-          marginLeft: 'auto',
-          marginRight: 'auto',
+          marginLeft: `auto`,
+          marginRight: `auto`,
           maxWidth: rhythm(24),
           padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
         }}
       >
         {header}
         {children}
+        <footer>
+          © {new Date().getFullYear()}, Built with
+          {` `}
+          <a href="https://www.gatsbyjs.org">Gatsby</a>
+        </footer>
       </div>
     )
   }
 }
 
-export default Template
+export default Layout
