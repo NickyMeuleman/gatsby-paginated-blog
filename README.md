@@ -1,9 +1,9 @@
-# gatsby-starter-blog
-Gatsby starter for creating a blog
+# gatsby-paginated-blog
+Gatsby starter for creating a blog with pagination
 
 Install this starter (assuming Gatsby is installed) by running from your CLI:
 
-`gatsby new gatsby-blog https://github.com/gatsbyjs/gatsby-starter-blog`
+`npx gatsby new my-paginated-blog https://github.com/NickyMeuleman/gatsby-paginated-blog`
 
 ## Running in development
 `gatsby develop`
